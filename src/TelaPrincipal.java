@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -37,13 +38,19 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
     private JPanel eventosPanel = new JPanel();
 
+    private JPanel eventosCenterPanel = new JPanel();
+
     private JPanel usuariosBotoesPanel = new JPanel();
+
+    private JPanel aplicarPanel = new JPanel();
 
     private JButton btnUsuarios = new JButton();
 
     private JButton btnEventos = new JButton();
 
     private JButton btnFiltrar = new JButton();
+
+    private JButton btnAplicarEventos = new JButton();
     
     private JButton btnVerEventos = new JButton();
 
@@ -57,9 +64,17 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
     private JTextField txtHora = new JTextField();
 
+    private JLabel labelTitulo = new JLabel();
 
+    private JLabel labelDescricao = new JLabel();
+
+    private JLabel labelData = new JLabel();
+
+    private JLabel labelHora = new JLabel();
 
     private JTable tabelaUsuario;
+
+    
 
 
     private GridBagConstraints gbc = new GridBagConstraints();
@@ -149,12 +164,29 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
             /*=================== EVENTOS PANEL ================== */
             this.eventosPanel.setLayout(new BoxLayout(eventosPanel, BoxLayout.PAGE_AXIS));
+            
+            this.eventosCenterPanel.setLayout(new GridLayout(8,1,10,10));
+            this.eventosCenterPanel.setMaximumSize(new Dimension(200,200));
 
-            this.txtTitulo.setAlignmentX(JTextField.CENTER_ALIGNMENT);
-         
+            this.labelTitulo.setText("Título do evento");
+            this.txtTitulo.setMaximumSize(new Dimension(150,30));
+            
+            this.labelDescricao.setText("Descrição do evento");
+            this.txtDescricao.setMaximumSize(new Dimension(150,30));
 
+            this.labelData.setText("Data do evento");
+            this.txtData.setMaximumSize(new Dimension(150,30));
 
+            this.labelHora.setText("Hora do evento");
+            this.txtHora.setMaximumSize(new Dimension(150,30));
 
+            this.aplicarPanel.setMaximumSize(new Dimension(100,100));
+            
+            this.btnAplicarEventos.setText("Aplicar");
+            this.btnAplicarEventos.setFocusable(false);
+            this.btnAplicarEventos.setBackground(Color.white);
+
+        
     
         /* ------------- BOTAO MOSTRAR USUARIOS ------------*/
         this.btnUsuarios.setBackground(Color.white);
@@ -204,15 +236,38 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
 
             /* ======EVENTOS PANEL====== */
+            
 
             
-            this.eventosPanel.add(txtTitulo);
-            this.eventosPanel.add(txtDescricao);
-            this.eventosPanel.add(txtData);
-            this.eventosPanel.add(txtHora);
-
+            this.eventosPanel.add(Box.createHorizontalStrut(160));
+            this.eventosPanel.add(Box.createVerticalGlue());
 
             
+            this.eventosPanel.add(eventosCenterPanel);
+
+            this.eventosCenterPanel.add(labelTitulo);
+            this.eventosCenterPanel.add(txtTitulo);
+        
+          
+            this.eventosCenterPanel.add(labelDescricao);
+            this.eventosCenterPanel.add(txtDescricao);
+            
+            
+            this.eventosCenterPanel.add(labelData);
+            this.eventosCenterPanel.add(txtData);
+            
+            
+            this.eventosCenterPanel.add(labelHora);
+            this.eventosCenterPanel.add(txtHora);
+
+            this.eventosPanel.add(Box.createRigidArea(new Dimension(0,10)));
+           
+            this.eventosPanel.add(aplicarPanel);
+
+            this.aplicarPanel.add(btnAplicarEventos);
+        
+            this.eventosPanel.add(Box.createVerticalGlue());
+            this.eventosPanel.add(Box.createHorizontalStrut(160));
 
     }
 

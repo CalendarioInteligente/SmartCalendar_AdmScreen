@@ -101,7 +101,6 @@ public class TelaPrincipal extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
         this.setSize(800, 550);
 
-        this.setMaximumSize(new Dimension(800,550)); // era pra funcionar
         this.setMinimumSize(new Dimension(800,550));
         
         ImageIcon logoImagem = new ImageIcon("src\\img\\LogoMinimalista.jpeg");
@@ -350,89 +349,88 @@ public class TelaPrincipal extends JFrame implements ActionListener{
     }
  
     private void construirTelaPesquisar(){
-    JTextField txtId = new JTextField();
 
-    JTextField txtNome = new JTextField();
+        JTextField txtId = new JTextField();
 
-    JTextField txtSobrenome = new JTextField();
+        JTextField txtNome = new JTextField();
 
-    JTextField txtEmail = new JTextField();
+        JTextField txtSobrenome = new JTextField();
 
-    JTextField txtTelefone = new JTextField();
+        JTextField txtEmail = new JTextField();
 
-    JLabel labelId = new JLabel();
+        JTextField txtTelefone = new JTextField();
 
-    JLabel labelNome = new JLabel();
+        JLabel labelId = new JLabel();
 
-    JLabel labelSobrenome = new JLabel();
+        JLabel labelNome = new JLabel();
 
-    JLabel labelEmail = new JLabel();
+        JLabel labelSobrenome = new JLabel();
 
-    JLabel labelTelefone = new JLabel();
+        JLabel labelEmail = new JLabel();
 
-    JButton btnFiltrar = new JButton();
+        JLabel labelTelefone = new JLabel();
 
-    JPanel mainPanel = new JPanel();
+        JButton btnFiltrar = new JButton();
 
-    telaPesquisar.setTitle("SmartCalendar - Pesquisar");
+        JPanel mainPanel = new JPanel();
 
-    ImageIcon logoImagem2 = new ImageIcon("src\\imgs\\LogoMinimalista.jpeg");
-    telaPesquisar.setIconImage(logoImagem2.getImage());
+        telaPesquisar.setTitle("Pesquisar");
 
-    telaPesquisar.setLocationRelativeTo(null);
-    telaPesquisar.setSize(300,500);
+        ImageIcon logoImagem2 = new ImageIcon("src\\img\\LogoMinimalista.jpeg");
+        telaPesquisar.setIconImage(logoImagem2.getImage());
 
-    telaPesquisar.setResizable(false);
+        telaPesquisar.setLocationRelativeTo(null);
+        telaPesquisar.setSize(300,500);
 
-    mainPanel.setLayout(null);
+        telaPesquisar.setResizable(false);
 
-    labelId.setText("Id do usuário");
-    labelId.setBounds(112,35,75,10);
-    txtId.setBounds(75,50,150,25);
+        mainPanel.setLayout(null);
 
-    labelNome.setText("Nome do usuário");
-    labelNome.setBounds(100,105,100,10);
-    txtNome.setBounds(75,120,150,25);
+        labelId.setText("Id do usuário");
+        labelId.setBounds(112,35,75,10);
+        txtId.setBounds(75,50,150,25);
 
-    labelSobrenome.setText("Sobrenome do Usuário");
-    labelSobrenome.setBounds(83,175,130,10);
-    txtSobrenome.setBounds(75,190,150,25);
+        labelNome.setText("Nome do usuário");
+        labelNome.setBounds(100,105,100,10);
+        txtNome.setBounds(75,120,150,25);
 
-    labelEmail.setText("Email do usuário");
-    labelEmail.setBounds(102,245,95,10);
-    txtEmail.setBounds(75,260,150,25);
+        labelSobrenome.setText("Sobrenome do Usuário");
+        labelSobrenome.setBounds(83,175,130,10);
+        txtSobrenome.setBounds(75,190,150,25);
 
-    labelTelefone.setText("Telefone do usuário");
-    labelTelefone.setBounds(92,315,115,10);
-    txtTelefone.setBounds(75,330, 150,25);
+        labelEmail.setText("Email do usuário");
+        labelEmail.setBounds(102,245,95,10);
+        txtEmail.setBounds(75,260,150,25);
 
-    btnFiltrar.setFocusable(false);
-    btnFiltrar.setBackground(Color.white);
-    btnFiltrar.setText("Filtrar");
-    btnFiltrar.setBounds(105,390,90,25);
-    btnFiltrar.addActionListener(this);
+        labelTelefone.setText("Telefone do usuário");
+        labelTelefone.setBounds(92,315,115,10);
+        txtTelefone.setBounds(75,330, 150,25);
 
-    telaPesquisar.add(mainPanel);
+        btnFiltrar.setFocusable(false);
+        btnFiltrar.setBackground(Color.white);
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.setBounds(105,390,90,25);
+        btnFiltrar.addActionListener(this);
 
-    mainPanel.add(labelId);
-    mainPanel.add(txtId);
+        telaPesquisar.add(mainPanel);
 
-    mainPanel.add(labelNome);
-    mainPanel.add(txtNome);
+        mainPanel.add(labelId);
+        mainPanel.add(txtId);
 
-    mainPanel.add(labelSobrenome);
-    mainPanel.add(txtSobrenome);
+        mainPanel.add(labelNome);
+        mainPanel.add(txtNome);
 
-    mainPanel.add(labelEmail);
-    mainPanel.add(txtEmail);
+        mainPanel.add(labelSobrenome);
+        mainPanel.add(txtSobrenome);
 
-    mainPanel.add(labelTelefone);
-    mainPanel.add(txtTelefone);
+        mainPanel.add(labelEmail);
+        mainPanel.add(txtEmail);
 
-    mainPanel.add(btnFiltrar);
+        mainPanel.add(labelTelefone);
+        mainPanel.add(txtTelefone);
+
+        mainPanel.add(btnFiltrar);
     }
 
-
-    
     
 }

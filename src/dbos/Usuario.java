@@ -97,6 +97,7 @@ public class Usuario {
     public boolean equals(Object u){
         if(u == null) return false;
         if(this.getClass() != u.getClass()) return false;
+        if(this == u) return true;
     
         Usuario usuario = (Usuario) u;
 
@@ -117,7 +118,6 @@ public class Usuario {
         this.sobrenome = u.getSobrenome();
         this.email = u.getEmail();
         this.telefone = u.getTelefone();
-
     }
 
     @Override

@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "z:\\2º SEMESTRE\\TI211 - Técnicas de Programação II\\sqljdbc_12.4\\ptb\\jars\\mssql-jdbc-12.4.2.jre11.jar"
+    ]
+}

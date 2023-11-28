@@ -180,7 +180,6 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
             this.tabelaUsuarioScrollPanel = new JScrollPane(tabelaUsuario);
             
-            
             this.usuariosBotoesPanel.setPreferredSize(new Dimension(100,100));
             this.usuariosBotoesPanel.setLayout(new GridBagLayout());
         
@@ -347,31 +346,14 @@ public class TelaPrincipal extends JFrame implements ActionListener{
         }
 
         if(event.getSource() == this.btnAplicarFiltro){
-            if(
-                this.txtId.getText().equals("") &&
-                this.txtNome.getText().equals("") &&
-                this.txtSobrenome.getText().equals("") &&
-                this.txtEmail.getText().equals("") &&
-                this.txtTelefone.getText().equals("")
-                ){
-                    System.out.println("Teste");
-                  
-                    // this.tabelaUsuario = new JTable(preencherTabela());
-                    // this.usuariosPanel.add(new JScrollPane(tabelaUsuario), BorderLayout.CENTER);
-                }
-            else{
-                System.out.println(Usuarios.getUsuariosComClausula(
-                    this.txtId.getText(),
-                    this.txtNome.getText(),
-                    this.txtSobrenome.getText(),
-                    this.txtEmail.getText(),
-                    this.txtTelefone.getText()
-                    ));
-
+                this.usuariosPanel.remove(tabelaUsuarioScrollPanel);
                 this.usuariosPanel.remove(tabelaUsuario);
+                repaint();
                 this.tabelaUsuario = new JTable(preencherTabelaComFiltro());
-                this.usuariosPanel.add(new JScrollPane(tabelaUsuario), BorderLayout.CENTER);
-            }
+                this.tabelaUsuarioScrollPanel = new JScrollPane(tabelaUsuario);
+                this.usuariosPanel.add(tabelaUsuarioScrollPanel, BorderLayout.CENTER);
+                setExtendedState(JFrame.ICONIFIED);
+                setExtendedState(JFrame.NORMAL);
         }
 
         if(event.getSource()== this.btnVerEventos){
@@ -380,6 +362,7 @@ public class TelaPrincipal extends JFrame implements ActionListener{
                 telaEventos.setarComponentes();
                 telaEventos.addComponentes();
                 telaEventos.setVisible(true);
+              
             }
         }
     }
@@ -417,11 +400,12 @@ public class TelaPrincipal extends JFrame implements ActionListener{
             this.txtTelefone.getText()
             );
             
-        DefaultTableModel tabelaModelo =  new DefaultTableModel(new Object[0][listUsuario.size()], colunas){
+        DefaultTableModel tabelaModelo = new DefaultTableModel(new Object[0][listUsuario.size()], colunas){
         @Override
         public boolean isCellEditable(int row, int column){
             return false;
         }};
+
 
 
         Object[] linha = new Object[5];

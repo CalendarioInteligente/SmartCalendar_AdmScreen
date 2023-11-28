@@ -105,6 +105,7 @@ public class Usuarios {
                     clausulas += " and ";
                 
                 }
+
                 clausulas += nomeCampos.get(i) + " like " + "'%" + listaClausula.get(i) + "%'";
 
                 if(i == listaClausula.size() - 1){}
@@ -115,10 +116,14 @@ public class Usuarios {
         }
 
 
-        
-        String sql = "select * from calendario.usuario where " + clausulas;
+        if(clausulas != ""){
+            String temp = clausulas;
+            clausulas =  " where ";
+            clausulas += temp;
+        }
+        else{}
+        String sql = "select * from calendario.usuario" + clausulas;
 
-        System.out.println(sql);
                   
         BDSQLServer.COMANDO.prepareStatement(sql);
 

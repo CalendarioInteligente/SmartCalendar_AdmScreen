@@ -29,8 +29,10 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import daos.Eventos;
 import daos.Usuarios;
 import dbos.Usuario;
+import dbos.ViewEventos;
 import javafx.beans.binding.ObjectExpression;
 
 
@@ -54,8 +56,6 @@ public class TelaPrincipal extends JFrame implements ActionListener{
     private JPanel eventosCenterPanel = new JPanel();
 
     private JPanel usuariosBotoesPanel = new JPanel();
-
-  
 
     private JPanel aplicarPanel = new JPanel();
 
@@ -118,6 +118,14 @@ public class TelaPrincipal extends JFrame implements ActionListener{
     private String[] colunas= {"Id do usuário","Nome do usuário", "Sobrenome do usuário", "Email", "Telefone"};
 
     private JFrame telaPesquisar =  new JFrame();
+
+    private JFrame telaEventos = new JFrame();
+
+    private String[] colunasEventos= {"Nome","Sobrenome", "Título", "Descrição", "Data","Hora"};
+
+    private JTable tabelaEventos;
+    
+    private JScrollPane tabelaEventosScrollPane;
 
     
 
@@ -317,7 +325,7 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
     // private TelaPesquisar telaPesquisar = new TelaPesquisar();
 
-    private TelaEventos telaEventos = new TelaEventos();
+    // private TelaEventos telaEventos = new TelaEventos();
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -352,6 +360,8 @@ public class TelaPrincipal extends JFrame implements ActionListener{
                 this.tabelaUsuario = new JTable(preencherTabelaComFiltro());
                 this.tabelaUsuarioScrollPanel = new JScrollPane(tabelaUsuario);
                 this.usuariosPanel.add(tabelaUsuarioScrollPanel, BorderLayout.CENTER);
+                this.tabelaUsuario.getTableHeader().setReorderingAllowed(false);
+                this.tabelaUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 setExtendedState(JFrame.ICONIFIED);
                 setExtendedState(JFrame.NORMAL);
         }
@@ -359,8 +369,11 @@ public class TelaPrincipal extends JFrame implements ActionListener{
         if(event.getSource()== this.btnVerEventos){
             if(telaEventos.isVisible())
             {}else{
-                telaEventos.setarComponentes();
-                telaEventos.addComponentes();
+                // telaEventos.setarComponentes();
+                // telaEventos.addComponentes();
+                // telaEventos.setVisible(true);
+
+                construirTelaEventos();
                 telaEventos.setVisible(true);
               
             }
@@ -484,5 +497,57 @@ public class TelaPrincipal extends JFrame implements ActionListener{
         mainPanelPesquisar.add(btnAplicarFiltro);
     }
 
+    private void construirTelaEventos(){
+
+        
+        this.telaEventos.setTitle("SmartCalendar - Eventos");
+        this.telaEventos.setSize(600,400);
+        this.telaEventos.setLocationRelativeTo(null);
+        
+        this.telaEventos.setLayout(new BorderLayout());
+
+        this.tabelaEventos = new JTable(preencherTabelaEventos());
+        this.tabelaEventos.getTableHeader().setReorderingAllowed(false);
+
+        this.tabelaEventosScrollPane = new JScrollPane(tabelaEventos);
+
+        this.telaEventos.add(tabelaEventosScrollPane, BorderLayout.CENTER);
+
+    }
+
+    public DefaultTableModel preencherTabelaEventos(){
+        ArrayList<ViewEventos> listEventos = Eventos.getEventos();
+        DefaultTableModel tabelaModelo =  new DefaultTableModel(new Object[0][listEventos.size()], colunasEventos){
+        @Override
+        public boolean isCellEditable(int row, int column){
+            return false;
+        }};
+
+
+        Object[] linha = new Object[6];
+        for(int i = 0; i< listEventos.size(); i++){
+            linha[0]=listEventos.get(i).getNome();
+            linha[1]=listEventos.get(i).getSobrenome();
+            linha[2]=listEventos.get(i).getTitulo();
+            linha[3]=listEventos.get(i).getDescricao();
+            linha[4]=listEventos.get(i).getData();
+            linha[5]=listEventos.get(i).getHora();
+            tabelaModelo.addRow(linha);
+        }
+
+        return tabelaModelo;
+
+    }
+
+    public int getEventoSelecionado() throws Exception{
+        int linhaEscolhida;
+        linhaEscolhida = this.tabelaUsuario.getSelectedRow();
+
+        // if(linhaEscolhida == -1) throw new Exception("Escolha uma linha!");
+
+
+        return (int) this.tabelaUsuario.getValueAt(linhaEscolhida, 0);
+
+    }
     
 }

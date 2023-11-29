@@ -1,3 +1,4 @@
+import daos.Eventos;
 import daos.Usuarios;
 import telas.TelaLogin;
 import telas.TelaPrincipal;
@@ -22,6 +23,9 @@ public class main {
           telaPrincipal.setarComponentes();
           telaPrincipal.addComponentes();
           telaPrincipal.setVisible(true);
+
+
+          System.out.println(Eventos.getEventos());
         }
           
         

@@ -68,4 +68,27 @@ public class Eventos {
         return eventoList;
 
     }
+
+
+    public static boolean setEventoGlobalmente(String titulo, String descricao, String data, String hora){
+
+        try{
+            String sql = "insert into calendario.evento values('?','?',convert(datetime, '?', 103))";
+
+            BDSQLServer.COMANDO.prepareStatement(sql);
+
+
+            BDSQLServer.COMANDO.setString(1, titulo);
+            BDSQLServer.COMANDO.setString(2, descricao);
+
+            String dataComHoras = data + " " + hora;
+            BDSQLServer.COMANDO.setString(3, dataComHoras);
+        
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 }

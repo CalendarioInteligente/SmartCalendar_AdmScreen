@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,6 +20,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,6 +30,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 import daos.Eventos;
 import daos.Usuarios;
@@ -77,7 +82,10 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
     private JTextField txtDescricao = new JTextField();
 
-    private JTextField txtData = new JTextField();
+
+    private JFormattedTextField txtData = new JFormattedTextField();
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private JTextField txtHora = new JTextField();
 
@@ -128,7 +136,6 @@ public class TelaPrincipal extends JFrame implements ActionListener{
     private JScrollPane tabelaEventosScrollPane;
 
     
-
     public TelaPrincipal()
     {
         new JFrame();
@@ -212,12 +219,25 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
             this.labelTitulo.setText("Título do evento");
             this.txtTitulo.setMaximumSize(new Dimension(150,30));
+           
             
             this.labelDescricao.setText("Descrição do evento");
             this.txtDescricao.setMaximumSize(new Dimension(150,30));
 
             this.labelData.setText("Data do evento");
             this.txtData.setMaximumSize(new Dimension(150,30));
+
+            MaskFormatter mascara = null;
+
+            try{
+                mascara = new MaskFormatter("##-##-####");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            this.txtData = new JFormattedTextField(mascara);
+            this.txtData.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(dateFormat)));
+    
 
             this.labelHora.setText("Hora do evento");
             this.txtHora.setMaximumSize(new Dimension(150,30));

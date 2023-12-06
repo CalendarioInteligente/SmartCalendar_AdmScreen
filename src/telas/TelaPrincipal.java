@@ -82,12 +82,11 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
     private JTextField txtDescricao = new JTextField();
 
-
     private JFormattedTextField txtData = new JFormattedTextField();
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    private JTextField txtHora = new JTextField();
+    private JTextField txtHora = new JTextField("00:00:00");
 
     private JTextField txtId = new JTextField();
 
@@ -247,6 +246,7 @@ public class TelaPrincipal extends JFrame implements ActionListener{
             this.btnAplicarEventos.setText("Aplicar");
             this.btnAplicarEventos.setFocusable(false);
             this.btnAplicarEventos.setBackground(Color.white);
+            this.btnAplicarEventos.addActionListener(this);
 
         
     
@@ -386,20 +386,43 @@ public class TelaPrincipal extends JFrame implements ActionListener{
                 setExtendedState(JFrame.NORMAL);
         }
 
+        
         if(event.getSource()== this.btnVerEventos){
+            
             if(telaEventos.isVisible())
             {}else{
                 // telaEventos.setarComponentes();
                 // telaEventos.addComponentes();
                 // telaEventos.setVisible(true);
-
-                construirTelaEventos();
-                telaEventos.setVisible(true);
+    
+                if(getEventoSelecionado()== 0)
+                    JOptionPane.showMessageDialog(this, "Selecione um usuário para ver seus eventos!", "Alerta", JOptionPane.WARNING_MESSAGE);
+                else{
+                        construirTelaEventos();
+                        telaEventos.setVisible(true);
+                        abriuAntes = true;
+                    }
+                }
               
             }
+        
+
+        if(event.getSource() == this.btnAplicarEventos){
+            Boolean aplicou = Eventos.setEventoGlobalmente(
+                                                            txtTitulo.getText(), 
+                                                            txtDescricao.getText(), 
+                                                            txtData.getText(), 
+                                                            txtHora.getText()
+                                                           );
+
+            if(aplicou)
+                JOptionPane.showMessageDialog(this, "Evento aplicado para todos os usuários!", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(this, "Houve algum erro nos dados, verifique os campos!", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }
 
+    private boolean abriuAntes = false;
     public DefaultTableModel preencherTabela(){
         ArrayList<Usuario> listUsuario = Usuarios.getUsuarios();
         DefaultTableModel tabelaModelo =  new DefaultTableModel(new Object[0][listUsuario.size()], colunas){
@@ -522,21 +545,27 @@ public class TelaPrincipal extends JFrame implements ActionListener{
         
         this.telaEventos.setTitle("SmartCalendar - Eventos");
         this.telaEventos.setSize(600,400);
+        this.telaEventos.setMinimumSize(new Dimension(600,400));
         this.telaEventos.setLocationRelativeTo(null);
         
         this.telaEventos.setLayout(new BorderLayout());
 
+        if(abriuAntes){
+            telaEventos.remove(tabelaEventosScrollPane);
+            telaEventos.remove(tabelaEventos);
+        }
         this.tabelaEventos = new JTable(preencherTabelaEventos());
         this.tabelaEventos.getTableHeader().setReorderingAllowed(false);
 
         this.tabelaEventosScrollPane = new JScrollPane(tabelaEventos);
 
         this.telaEventos.add(tabelaEventosScrollPane, BorderLayout.CENTER);
+        
 
     }
 
     public DefaultTableModel preencherTabelaEventos(){
-        ArrayList<ViewEventos> listEventos = Eventos.getEventos();
+        ArrayList<ViewEventos> listEventos = Eventos.getEventos(getEventoSelecionado());
         DefaultTableModel tabelaModelo =  new DefaultTableModel(new Object[0][listEventos.size()], colunasEventos){
         @Override
         public boolean isCellEditable(int row, int column){
@@ -559,12 +588,12 @@ public class TelaPrincipal extends JFrame implements ActionListener{
 
     }
 
-    public int getEventoSelecionado() throws Exception{
+    public int getEventoSelecionado(){
         int linhaEscolhida;
         linhaEscolhida = this.tabelaUsuario.getSelectedRow();
-
-        // if(linhaEscolhida == -1) throw new Exception("Escolha uma linha!");
-
+        
+        if(linhaEscolhida == -1)
+            return 0;
 
         return (int) this.tabelaUsuario.getValueAt(linhaEscolhida, 0);
 

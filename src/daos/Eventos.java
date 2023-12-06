@@ -12,7 +12,7 @@ public class Eventos {
     public static ArrayList<ViewEventos> getEventos(){
             ArrayList<ViewEventos> eventoList = new ArrayList<>();
         try{
-            String sql = "select * from calendario.ViewEventos";
+            String sql = "SELECT * FROM CALENDARIO.ViewEventos";
 
             BDSQLServer.COMANDO.prepareStatement(sql);
 
@@ -40,10 +40,9 @@ public class Eventos {
      public static ArrayList<ViewEventos> getEventos(int id){
             ArrayList<ViewEventos> eventoList = new ArrayList<>();
         try{
-            String sql = "select * from calendario.ViewEventos where id = ?";
+            String sql = "SELECT * FROM CALENDARIO.ViewEventos WHERE id = ?";
 
 
-           
             BDSQLServer.COMANDO.prepareStatement(sql);
 
             BDSQLServer.COMANDO.setInt(1, id);
@@ -73,22 +72,25 @@ public class Eventos {
     public static boolean setEventoGlobalmente(String titulo, String descricao, String data, String hora){
 
         try{
-            String sql = "insert into calendario.evento values('?','?',convert(datetime, '?', 103))";
+            String dataComHoras = data + " " + hora;
+
+            String sql = "DECLARE @dat DATETIME = CONVERT(DATETIME,'" + dataComHoras + "',103); " +
+                         "EXEC Calendario.aplicarEventoGlobalmente '" + descricao +"', '" + titulo + "', @dat";
 
             BDSQLServer.COMANDO.prepareStatement(sql);
 
+            // BDSQLServer.COMANDO.setString(1, descricao); Não funciona
+            // BDSQLServer.COMANDO.setString(2, titulo);
 
-            BDSQLServer.COMANDO.setString(1, titulo);
-            BDSQLServer.COMANDO.setString(2, descricao);
-
-            String dataComHoras = data + " " + hora;
-            BDSQLServer.COMANDO.setString(3, dataComHoras);
+            BDSQLServer.COMANDO.executeUpdate ();
+            BDSQLServer.COMANDO.commit        ();
+            
+            return true;
         
 
         }catch(Exception e){
             e.printStackTrace();
+            return false;
         }
-
-        return true;
     }
 }

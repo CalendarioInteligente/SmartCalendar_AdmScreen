@@ -97,24 +97,17 @@ public class Usuarios {
       
         String clausulas = "";
 
+        boolean and = false;
         for(int i = 0; i < listaClausula.size(); i++){
             if(listaClausula.get(i).equals("")){}
             else{
-
-                if(i == listaClausula.size() - 1 && listaClausula.get(i - 1).equals("")){
-                    clausulas += " and ";
-                
-                }
-
+                if(and == true)
+                    clausulas += " and ";    
+            
                 clausulas += nomeCampos.get(i) + " like " + "'%" + listaClausula.get(i) + "%'";
-
-                if(i == listaClausula.size() - 1){}
-                else if(!listaClausula.get(i + 1).equals("")){
-                    clausulas += " and ";
-                }
+                and = true;
             }
         }
-
 
         if(clausulas != ""){
             String temp = clausulas;
@@ -122,8 +115,8 @@ public class Usuarios {
             clausulas += temp;
         }
         else{}
+        
         String sql = "select * from calendario.usuario" + clausulas;
-
                   
         BDSQLServer.COMANDO.prepareStatement(sql);
 
@@ -141,6 +134,8 @@ public class Usuarios {
                             );
                 usuarioList.add(usuario);
             }
+
+            
 
         }catch(Exception e){
         e.printStackTrace();

@@ -1,6 +1,6 @@
 package dbos;
 
-public class Usuario {
+public class Usuario implements Cloneable{
 
     private int id;
     private String nome;

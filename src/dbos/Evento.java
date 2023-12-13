@@ -1,19 +1,13 @@
 package dbos;
 
-public class Evento {
-    /* id int IDENTITY(1, 1) NOT NULL,
-	descricao varchar(200) not null,
-	titulo varchar(40) not null,
-	idUsuario int not null,
-	data datetime not null, */
+public class Evento implements Cloneable{
 
     private int id;
     private String descricao;
     private String titulo;
     private int idUsuario;
     private String data;
-    // private String hora;
-
+  
 
     public int getId(){
         return this.id;
@@ -34,10 +28,6 @@ public class Evento {
     public String getData(){
         return this.data;
     }
-
-    // public String getHora(){
-    //     return this.hora;
-    // }
 
     public void setId(int id)throws Exception{
         if(id < 0) throw new Exception("Id inválido!");
@@ -69,14 +59,6 @@ public class Evento {
         this.data= data;
     }
 
-    // public void setHora(String hora)throws Exception{
-    //     if(hora.equals("")|| hora== null) throw new Exception("Hora não pode ser nula!");
-
-    //     this.hora = hora;
-    // }
-
-
-
     public Evento(int id, String descricao, String titulo, int idUsuario, String data /*,String hora */)throws Exception{
         setId(id);
         setDescricao(descricao);
@@ -93,8 +75,8 @@ public class Evento {
         "Titulo: " + this.titulo + "\n" +
         "Descrição: " + this.descricao + "\n" +
         "idUsuário: " + this.idUsuario + "\n" +
-        "Data: " + this.data + "\n"; /* +
-        "Hora: " + this.hora + "\n";*/
+        "Data: " + this.data + "\n";
+   
     }
 
     @Override
@@ -110,7 +92,7 @@ public class Evento {
         if(this.descricao != evento.getDescricao()) return false;
         if(this.idUsuario != evento.getIdUsuario()) return false;
         if(this.data != evento.getData()) return false;
-        // if(this.hora != evento.getHora()) return false;
+
 
         return true;
     }
@@ -125,7 +107,6 @@ public class Evento {
         ret += 7*ret + String.valueOf(this.titulo).hashCode();
         ret += 7*ret + Integer.valueOf(this.idUsuario).hashCode();
         ret += 7*ret + String.valueOf(this.data).hashCode();
-        // ret += 7*ret + String.valueOf(this.hora).hashCode();
 
         if(ret < 0 ) ret = -ret;
 
@@ -133,8 +114,23 @@ public class Evento {
     }
 
 
-    
+    public Evento(Evento e) throws Exception{
+        if(e == null) throw new Exception("Objeto evento nulo!");
 
+        this.id = e.id;
+        this.titulo = e.titulo;
+        this.descricao = e.descricao;
+        this.idUsuario = e.idUsuario;
+        this.data = e.data;
+    }
 
-    
+    @Override
+    public Evento clone(){
+        Evento ret = null;
+        try{
+            ret = new Evento(this);
+        }catch(Exception e){}
+
+        return ret;
+    } 
 }
